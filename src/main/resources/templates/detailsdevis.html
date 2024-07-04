@@ -1,6 +1,7 @@
 <div class="container-fluid pt-4 px-4" th:fragment="content">
     <div class="row g-4">
         <div class="bg-secondary rounded p-4">
+            <h1>Détails de devis</h1>
             <h2 th:text="${devis.idmatricule}"></h2>
             <h3 th:text="${details.numeroClient}"></h3>
             <p>Debut des travaux: <span th:text="${devis.getDateDebutString()}"></span></p>

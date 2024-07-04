@@ -85,6 +85,7 @@
                 </div>
             </nav>
             <div class="container-fluid pt-4 px-4">
+                <h1>Tableau de bord</h1>
                 <div class="row g-4">
                     <div class="col-sm-6 col-xl-3">
                         <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
@@ -110,7 +111,7 @@
                     <div class="col-10">
                         <div class="bg-secondary text-center rounded h-100 p-4">
                             <form action="/tableau-bord" method="get">
-                            <h1 class="mb-0">Montant des devis par mois</h1>
+                            <h2 class="mb-0">Montant des devis par mois</h2>
                             <div class="d-flex align-items-center justify-content-between mb-4" style="display: flex;justify-content: space-evenly;">
                                 <input type="number" th:value="${anneeFiltre}" placeholder="" min="1990" name="annee" max="2999" class="form-control" id="annee">
                                 <button class="btn btn-primary" type="submit">Ok</button>
