@@ -194,13 +194,13 @@ public class AdminController {
             model.addAttribute("erreursDevis", erreursDevis);
         }
     }
-    @GetMapping("/importpaiement")
+    @GetMapping("/import-paiement")
     public Object importerPaiements(HttpServletRequest req, Model model){
         HttpSession session=req.getSession();
         Object loggedIn=Iris.adminCheck(session, model, "importpaiement", "Importation de paiement");
         return loggedIn;
     }
-    @PostMapping("/importpaiement")
+    @PostMapping("/import-paiement")
     public Object importerPaiement(HttpServletRequest req, Model model, MultipartFile paiementsMultipart) throws SQLException, Exception{
         HttpSession session=req.getSession();
         Object loggedIn=Iris.adminCheck(session, model, "revision-import-paiement", "Confirmation d'import de paiement");
