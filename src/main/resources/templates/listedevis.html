@@ -1,0 +1,85 @@
+<div class="container-fluid pt-4 px-4" th:fragment="content">
+    <div class="row g-4">
+        <div class="col-10 offset-1">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h5>Liste des devis</h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Debut</th>
+                            <th scope="col">Reste a payer</th>
+                            <th scope="col">Terminé</th>
+                            <th scope="col"></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="dev:${devis}">
+                            <td th:text="${dev.idmatricule}"></td>
+                            <td th:text="${dev.getDateDebutString()}"></td>
+                            <td th:text="${dev.getResteAPayerString()}"></td>
+                            <td th:text="${dev.getTermine()}"></td>
+                            <td><button class="btn btn-primary" data-bs-toggle="modal" th:data-bs-target="'#payer'+${dev.id}">Payer</button></td>
+                            <div class="modal fade" th:id="'payer'+${dev.id}" tabindex="-1" aria-labelledby="payerLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <form onsubmit="verifier(event)">
+                                    <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="payerLabel">Payer le devis</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="date" class="form-label">Date de paiement</label>
+                                            <input type="datetime-local" class="form-control" name="datepaiement" id="date">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="montant" class="form-label">Montant</label>
+                                            <input type="text" class="form-control" name="montant" id="montant"
+                                                aria-describedby="montantHelp">
+                                            <div id="montantHelp" class="form-text">Vous pouvez payer en plusieurs fois.
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="devis" th:value="${dev.id}">
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Valider</button>
+                                    <p style="color: red;" th:id="'messageid'+${dev.id}"></p>
+                                    </div>
+                                    </form>
+                                </div>
+                                <script th:inline="javascript">
+                                    /*<![CDATA[*/
+                                    let messageid=/*[[${'messageid'+dev.id}]]*/'';
+                                    let message=document.getElementById(messageid);
+                                    function verifier(event){
+                                        event.preventDefault();
+                                        const formData=new FormData(event.currentTarget);
+                                        fetch("http://localhost:8080/verifier",{
+                                            method:"POST",
+                                            body:formData
+                                        }).then((res)=>{
+                                            return res.json();
+                                        }).then((data)=>{
+                                            if(data==0){
+                                                message.textContent="Montant superieur au reste a payer.";
+                                            }else{
+                                                location.reload();
+                                            }
+                                        })
+                                    }
+                                    /*]]*/
+                                </script>
+                                </div>
+                            </div>
+                            <td><a th:href="@{|/exporter?iddevis=${dev.id}|}"><button class="btn btn-primary">PDF</button></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><a href="/creation-devis"><button class="btn btn-primary"><i class="fa-solid fa-plus"></i>Créer un devis</button></a></p>
+            </div>
+        </div>
+    </div>
+</div>

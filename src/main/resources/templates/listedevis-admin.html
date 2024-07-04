@@ -1,0 +1,33 @@
+<div class="container-fluid pt-4 px-4" th:fragment="content">
+    <div class="row g-4">
+        <div class="col-10 offset-1">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h5>Liste des devis</h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th scope="col">ID</th>
+                            <th scope="col">Client</th>
+                            <th scope="col">Montant total</th>
+                            <th scope="col">Montant payé</th>
+                            <th scope="col">% payé</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${devis.length>0}" th:each="i:${#numbers.sequence(0,devis.length-1)}">
+                            <td th:style="'background-color:'+${devis[i].getCouleur()}"></td>
+                            <td><a th:href="'/detailsdevis-admin?iddevis='+${devis[i].id}"><span th:text="${devis[i].idmatricule}"></span></a></td>
+                            <td th:text="${details[i].numeroClient}"></td>
+                            <td th:text="${devis[i].getMontantString()}"></td>
+                            <td th:text="${devis[i].getMontantPayeString()}"></td>
+                            <td th:text="${devis[i].getPourcentPayeString()}" th:style="'color:'+${devis[i].getCouleurPolicePourcent()}+';background-color:'+${devis[i].getCouleur()}"></td>
+                            <td><a th:href="@{|/exporter?iddevis=${devis[i].id}|}"><button class="btn btn-primary">PDF</button></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

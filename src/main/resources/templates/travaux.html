@@ -1,0 +1,69 @@
+<div class="container-fluid pt-4 px-4" th:fragment="content">
+    <div class="row g-4">
+        <div class="col-10 offset-1">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h5>Liste des types de travaux</h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Designation</th>
+                            <th>Unite</th>
+                            <th>Prix unitaire</th>
+                            <th>Code</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="t:${travaux}">
+                            <td th:text="${t.designation}"></td>
+                            <td th:text="${t.unite.symbole}"></td>
+                            <td th:text="${t.prixunitaire}"></td>
+                            <td th:text="${t.numero}"></td>
+                            <td><button class="btn btn-primary" data-bs-toggle="modal" th:data-bs-target="'#modifier'+${t.id}">Modifier</button></td>
+                            <div class="modal fade" th:id="'modifier'+${t.id}" tabindex="-1" aria-labelledby="modifierLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <form action="/types-travaux" method="post">
+                                    <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="modifierLabel">Modifier le type de travaux</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="designation" class="form-label">Designation</label>
+                                            <input type="text" class="form-control" th:value="${t.designation}" name="designation" id="designation">
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <select class="form-select" name="unite" id="unites">
+                                                <span th:each="u:${unites}" th:switch="${u.id}">
+                                                    <option th:case="${t.unite.id}" th:value="${u.id}" th:text="${u.symbole}" selected></option>
+                                                    <option th:case="*" th:value="${u.id}" th:text="${u.symbole}"></option>
+                                                </span>
+                                            </select>
+                                            <label for="unites">Unite</label>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="prixunitaire" class="form-label">Prix unitaire</label>
+                                            <input type="text" class="form-control" th:value="${t.prixunitaire}" name="prixunitaire" id="prixunitaire">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="code" class="form-label">Code</label>
+                                            <input type="text" class="form-control" th:value="${t.numero}" name="code" id="code">
+                                        </div>
+                                        <input type="hidden" name="travaux" th:value="${t.id}">
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Valider</button>
+                                    </div>
+                                    </form>
+                                </div>
+                                </div>
+                            </div>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

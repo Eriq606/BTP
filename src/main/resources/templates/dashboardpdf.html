@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title th:text="'HomeReNo - '+${title}"></title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+
+    <!-- Google Web Fonts -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.5/dist/bootstrap-table.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
+    
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet">
+    <link th:href="@{/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css}" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+
+<body onclick="imprimer()">
+    <div class="container-fluid position-relative d-flex p-0">
+        <div class="content">
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-money-check fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Montant total des devis</p>
+                                <h6 class="mb-0" th:text="${sommeDevis}"></h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-money-bill-transfer fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Montant total des paiements</p>
+                                <h6 class="mb-0" th:text="${sommePaiement}"></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row g-4">
+                    <div class="col-10">
+                        <div class="bg-secondary text-center rounded h-100 p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4" style="display: flex;justify-content: space-evenly;">
+                                <h6 class="mb-0">Montant des devis par mois: <span th:value="${anneeFiltre}"></span></h6>
+                            </div>
+                            <canvas id="parmois"></canvas>
+                        </div>
+                    </div>
+                    <!-- <div class="col-sm-12 col-xl-6">
+                        <div class="bg-secondary text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Montant des devis par annee</h6>
+                            </div>
+                            <canvas id="parannee"></canvas>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <script th:src="@{https://code.jquery.com/jquery-3.4.1.min.js}"></script>
+        <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{lib/chart/chart.min.js}"></script>
+        <!-- <script th:src="@{lib/easing/easing.min.js}"></script>
+        <script th:src="@{lib/waypoints/waypoints.min.js}"></script>
+        <script th:src="@{lib/owlcarousel/owl.carousel.min.js}"></script>
+        <script th:src="@{lib/tempusdominus/js/moment.min.js}"></script>
+        <script th:src="@{lib/tempusdominus/js/moment-timezone.min.js}"></script>
+        <script th:src="@{lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js}"></script> -->
+        <script th:src="@{https://kit.fontawesome.com/9a5477cba8.js}" crossorigin="anonymous"></script>
+        <!-- Template Javascript -->
+        <script th:src="@{js/main.js}"></script>
+        <!-- <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.5/dist/bootstrap-table.min.js}"></script> -->
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            let devisAnnee = /*[[${devisAnnee}]]*/ [];
+            let devisMois = /*[[${devisMois}]]*/[];
+            let labelsAnnee=[];
+            let labelsMois=[];
+            let valuesAnnee=[];
+            let valuesMois=[];
+            devisAnnee.forEach((item)=>{ labelsAnnee.push(item.annee); });
+            devisAnnee.forEach((item)=>{ valuesAnnee.push(item.montantTotal); });
+            devisMois.forEach((item)=>{ labelsMois.push(item.moisString); });
+            devisMois.forEach((item)=>{ valuesMois.push(item.montantTotal); });
+            /*]]*/
+        </script>
+        <script>
+            // Single Line Chart
+            var ctx3 = $("#parmois").get(0).getContext("2d");
+            var myChart3 = new Chart(ctx3, {
+                type: "bar",
+                data: {
+                    labels: labelsMois,
+                    datasets: [{
+                        label:"Montant total des devis du mois",
+                        backgroundColor: "#00e7cc",
+                        data: valuesMois
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+
+            // Single Bar Chart
+            let ctx5 = $("#parannee").get(0).getContext("2d");
+            let myChart5 = new Chart(ctx5, {
+                type: "bar",
+                data: {
+                    labels: labelsAnnee,
+                    datasets: [{
+                        backgroundColor: [
+                            "#00ff7b",
+                            "#00e7cc",
+                            "#00c7ff",
+                            "#009dff",
+                            "#0062ff"
+                        ],
+                        data: valuesAnnee
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+            function imprimer(){
+                window.print();
+            }
+        </script>
+        </div>
+    </div>
+</body>
+</html>

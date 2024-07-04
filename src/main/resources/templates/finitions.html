@@ -1,0 +1,48 @@
+<div class="container-fluid pt-4 px-4" th:fragment="content">
+    <div class="row g-4">
+        <div class="col-10 offset-1">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h5>Liste des types de finition</h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Taux</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="f:${finitions}">
+                            <td th:text="${f.nom}"></td>
+                            <td th:text="${f.pourcentage}"></td>
+                            <td><button class="btn btn-primary" data-bs-toggle="modal" th:data-bs-target="'#modifier'+${f.id}">Modifier</button></td>
+                            <div class="modal fade" th:id="'modifier'+${f.id}" tabindex="-1" aria-labelledby="modifierLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <form action="/finitions" method="post">
+                                    <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="modifierLabel">Modifier le type de finition</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="pourcentage" class="form-label">Taux de hausse</label>
+                                            <input type="text" class="form-control" th:value="${f.pourcentage}" name="pourcentage" id="pourcentage">
+                                        </div>
+                                        <input type="hidden" name="finition" th:value="${f.id}">
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Valider</button>
+                                    </div>
+                                    </form>
+                                </div>
+                                </div>
+                            </div>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

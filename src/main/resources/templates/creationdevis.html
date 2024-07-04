@@ -1,0 +1,69 @@
+<div class="container-fluid pt-4 px-4" th:fragment="content">
+    <div class="row g-4">
+        <div class="col-10 offset-1 bg-secondary rounded h-100 p-4">
+            <h3>Creation de devis</h3>
+            <form action="/creation-devis" method="post">
+            <div class="row">
+                <div class="mb-3 col-5">
+                    <label for="lieu" class="form-label">Lieu</label>
+                    <input type="text" name="lieu" class="form-control" id="lieu"
+                        aria-describedby="lieuHelp" required>
+                    <div id="lieuHelp" class="form-text">Le lieu du futur batiment.
+                    </div>
+                </div>
+            </div>
+            <br>
+            <h4>Type de maison</h4>
+            <br>
+            <div class="row" style="display: flex;justify-content: space-evenly;">
+                <div th:each="i:${#numbers.sequence(0,maisons.length-1)}" class="col-3 rounded" style="background-color: white;border: solid 5px #ffa600;height: 450px;display: flex;flex-direction: column;align-items: center;justify-content: space-evenly;">
+                    <h5 style="color: black;" th:text="${maisons[i].nom}"></h5>
+                    <h6 style="color: black;" th:text="${maisons[i].getPrixString()}"></h6>
+                    <p th:switch="${i}">
+                        <input th:case="'0'" type="radio" class="form-check-input" th:value="${maisons[i].id}" name="typemaison" checked>
+                        <input th:case="*" type="radio" class="form-check-input" th:value="${maisons[i].id}" name="typemaison">
+                    </p>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="form-floating mb-3 col-5">
+                <select class="form-select" name="finition" id="floatingSelect"
+                    aria-label="Floating label select example">
+                    <option th:each="finition:${finitions}" th:value="${finition.id}" th:text="${finition.getPourcentageString()}"></option>
+                </select>
+                <label for="floatingSelect">Type de finition</label>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-5">
+                    <label for="debut" class="form-label">Date de début des travaux</label>
+                    <input type="datetime-local" name="datedebut" class="form-control" id="debut"
+                        aria-describedby="debutHelp" th:value="${aujourdhui}">
+                    <div id="debutHelp" class="form-text">La date de début des travaux.
+                    </div>
+                </div>
+            </div>
+            <p><strong>Durée estimée des travaux:</strong></p>
+            <div class="col-5">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Type de maison</th>
+                            <th>Durée</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="maison:${maisons}">
+                            <td th:text="${maison.nom}"></td>
+                            <td th:text="${maison.getDureeString()}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            <p><button type="submit" class="btn btn-primary">Valider</button></p>
+            <p style="color: red;" th:text="${message}"></p>
+            </form>
+        </div>
+    </div>
+</div>

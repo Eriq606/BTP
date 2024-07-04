@@ -1,0 +1,25 @@
+<div class="container-fluid pt-4 px-4" th:fragment="content">
+    <div class="row g-4">
+        <div class="col-10 offset-1">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6>Erreurs dans le fichier: <span th:text="${fichierPaiement}"></span></h6>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Ligne</th>
+                            <th>Message d'erreur</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="erreur:${erreursMaison}">
+                            <td th:text="${erreur.ligne}"></td>
+                            <td th:text="${erreur.message}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h6>Erreurs du serveur:</h6>
+                <p style="color: red;" th:each="e:${erreurs}" th:text="${e}"></p>
+            </div>
+        </div>
+    </div>
+</div>

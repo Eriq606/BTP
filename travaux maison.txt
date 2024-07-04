@@ -1,0 +1,49 @@
+
+-- Traditionnelle
+INSERT INTO travaux_maison
+( id, id_type_maison, id_travaux, quantite ) VALUES
+( DEFAULT, 1, 1, 26.8),
+( DEFAULT, 1, 2, 101.36),
+( DEFAULT, 1, 3, 101.36),
+( DEFAULT, 1, 4, 24.44),
+( DEFAULT, 1, 5, 15.59);
+
+
+-- Contemporaine
+INSERT INTO travaux_maison
+( id, id_type_maison, id_travaux, quantite ) VALUES
+( DEFAULT, 2, 1, 26.8),
+( DEFAULT, 2, 2, 101.36),
+( DEFAULT, 2, 3, 101.36),
+( DEFAULT, 2, 4, 24.44),
+( DEFAULT, 2, 5, 15.59),
+
+( DEFAULT, 2, 6, 1 ),
+( DEFAULT, 2, 7, 9.62 ),
+( DEFAULT, 2, 8, 0.53 ),
+( DEFAULT, 2, 9, 0.56 ),
+( DEFAULT, 2, 10,2.44 );
+
+
+-- Moderne
+INSERT INTO travaux_maison
+( id, id_type_maison, id_travaux, quantite ) VALUES
+( DEFAULT, 3, 1, 26.8),
+( DEFAULT, 3, 2, 101.36),
+( DEFAULT, 3, 3, 101.36),
+( DEFAULT, 3, 4, 24.44),
+( DEFAULT, 3, 5, 15.59),
+( DEFAULT, 3, 6, 1 ),
+( DEFAULT, 3, 7, 9.62 ),
+( DEFAULT, 3, 8, 0.53 ),
+( DEFAULT, 3, 9, 0.56 ),
+( DEFAULT, 3, 10,2.44 ),
+
+( DEFAULT, 3, 11, 15.59 ),
+( DEFAULT, 3, 12, 7.80 ),
+( DEFAULT, 3, 13, 5.46 ),
+( DEFAULT, 3, 14,77.97 );
+
+
+
+

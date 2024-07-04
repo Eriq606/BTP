@@ -1,0 +1,46 @@
+<div class="container-fluid pt-4 px-4" th:fragment="content">
+    <div class="row g-4">
+        <div class="bg-secondary rounded p-4">
+            <h2 th:text="${devis.idmatricule}"></h2>
+            <h3 th:text="${details.numeroClient}"></h3>
+            <p>Debut des travaux: <span th:text="${devis.getDateDebutString()}"></span></p>
+            <p>Fin des travaux: <span th:text="${devis.getDateFinString()}"></span></p>
+            <p>Duree: <span th:text="${devis.maison.getDureeString()}"></span></p>
+            <hr/>
+            <p>Type de maison: <span th:text="${devis.maison.nom}"></span></p>
+            <p>Type de finition: <span th:text="${devis.finition.nom}"></span></p>
+            <p>Hausse du prix par rapport au type de finition: <span th:text="${devis.finition.pourcentage}"></span> %</p>
+            <h3>Travaux a faire:</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Designations</th>
+                        <th>U</th>
+                        <th>Q</th>
+                        <th>PU</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="t:${travaux}">
+                        <td th:text="${t.numeroTravaux}"></td>
+                        <td th:text="${t.nomTravaux}"></td>
+                        <td th:text="${t.unite}"></td>
+                        <td th:text="${t.getQuantiteString()}"></td>
+                        <td th:text="${t.getPrixUnitaireString()}"></td>
+                        <td th:text="${t.getMontantString()}"></td>
+                    </tr>
+                    <tr>
+                        <th colspan="5">Montant total</th>
+                        <th th:text="${montantTotal}"></th>
+                    </tr>
+                    <tr>
+                        <th colspan="5">Montant total avec hausse de prix du type de finition</th>
+                        <th th:text="${devis.getMontantString()}"></th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
