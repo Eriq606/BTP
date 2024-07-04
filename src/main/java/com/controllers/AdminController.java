@@ -107,13 +107,13 @@ public class AdminController {
             return loggedIn;
         }
     }
-    @GetMapping("/importmaisontravaux")
+    @GetMapping("/import-maison-travaux")
     public Object importerDonnees(HttpServletRequest req, Model model){
         HttpSession session=req.getSession();
         Object loggedIn=Iris.adminCheck(session, model, "importmaisontravaux", "Importation de donnees");
         return loggedIn;
     }
-    @PostMapping("/importmaisontravaux")
+    @PostMapping("/import-maison-travaux")
     public Object importerDonnees(HttpServletRequest req, Model model, MultipartFile maisontravaux, MultipartFile devisMultipart) throws SQLException, Exception{
         HttpSession session=req.getSession();
         Object loggedIn=Iris.adminCheck(session, model, "revision-import-maisontravaux", "Confirmation d'import");
